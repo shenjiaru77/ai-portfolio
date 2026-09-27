@@ -1,0 +1,39 @@
+[33m31cda0f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m task3 second commit
+[33m91b8e9a[m task3 first commit
+[33m0d380da[m add 8 prompt templates with iteration records
+[33mcb83693[m Merge branch 'main' of https://github.com/shenjiaru77/ai-portfolio
+[33m3fb46ab[m add 教案设计模板
+[33m2960870[m Delete prompt-library/语法改错.md
+[33m35c5c8e[m Delete prompt-library/课堂活动.md
+[33mae936d5[m Delete prompt-library/出题.md
+[33medaa678[m Delete prompt-library/段落总结.md
+[33ma553702[m Delete prompt-library/近义词辨析教学.md
+[33mf61da1a[m Delete prompt-library/作文批改评语.md
+[33m4909076[m Delete prompt-library/教案.md
+[33m9507b0c[m Delete prompt-library/中英翻译.md
+[33ma5e60d5[m Delete prompt-library/prompt_iteration_shturl
+[33m366ad03[m task3 second commit
+[33md2d35dc[m task3 first commit
+[33m8b15d63[m Create teaching template for Chinese synonym analysis
+[33m28102f9[m Revise essay feedback template for clarity and detail
+[33m4fc4d32[m Add essay correction comment template for students
+[33m386858b[m Enhance prompt with variable question count
+[33m29ae46b[m Update 出题.md
+[33m3d9f0ac[m Optimize prompt iterations for HSK reading questions
+[33mace26e9[m Enhance prompt guidelines for HSK4 reading questions
+[33m696b0a4[m Enhance prompt structure for HSK4 question generation
+[33m0566830[m Enhance prompt-library with HSK reading question template
+[33mb795a85[m Update 出题.md
+[33m4395eeb[m Update 出题.md with adjustable question options
+[33m27924a2[m Update 出题.md to include question quantity note
+[33m65e316e[m Add prompt iteration documentation for HSK templates
+[33mf101bf4[m Create 中英翻译.md for translation prompts
+[33m0f1ca78[m Create段落总结.md for summarizing Chinese texts
+[33m34c3b3e[m Create classroom activities document for HSK4
+[33m2669992[m Create 语法改错.md
+[33m6410a9b[m Rename prompt-library/prompt-library/教案.md to prompt-library/教案.md
+[33m45c819e[m Add HSK4 lesson plan template in 教案.md
+[33mf33ad1e[m Create prompt for HSK4 reading comprehension questions
+[33m707d2f5[m Add AI任务单.md for task documentation
+[33m8dbfeba[m Add greeting message to hello.py
+[33ma5abf39[m Initial commit
