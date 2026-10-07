@@ -1,0 +1,108 @@
+词汇	变量	Python-W3
+正面	变量：给数据起名字	在 Python 中如何声明一个变量？
+背面	变量名 = 值
+
+示例：
+words = ["坚持", "商量", "讨论"]
+level = "4"
+is_valid = True	Python-W3
+正面	if 条件判断：按条件挑出想要的	在 Python 中 if 语句的基本结构是什么？
+背面	if 条件:
+    # 条件为真时执行的代码
+else:
+    # 条件为假时执行的代码
+
+示例：
+if w["HSK等级"] == "4":
+    print(w["词汇"])	Python-W3
+正面	for 循环：一个个过一遍	列表推导式 [x for x in 列表 if 条件] 的含义是什么？
+背面	对列表中的每个元素执行操作，并可选地按条件过滤。
+
+示例：
+lv4 = [w for w in words if str(w["HSK等级"]) == "4"]
+# 等价于：
+# for w in words:
+#     if str(w["HSK等级"]) == "4":
+#         lv4.append(w)	Python-W3
+正面	def 函数：打包动作可复用	Python 中如何定义一个带参数的函数并返回值？
+背面	def 函数名(参数1, 参数2):
+    # 处理逻辑
+    return 结果
+
+示例：
+def filter_by_level(words, level="4"):
+    return [w for w in words if str(w["HSK等级"]) == str(level)]	Python-W3
+正面	csv.DictReader 的作用是什么？	csv.DictReader 读取 CSV 后每一行是什么类型？
+背面	每一行是一个 dict（字典），键名 = CSV 表头的字段名。
+因此 CSV 表头叫什么，代码里就要写什么字段名访问。
+
+示例：
+with open("生词表.csv", encoding="utf-8") as f:
+    words = list(csv.DictReader(f))
+# words[0]["词汇"] → 第一个词的词汇	Python-W3
+正面	dict.get(key, 默认值) 的用法	统计词频时 dict.get(k,0)+1 是什么套路？
+背面	取值时如果键不存在，返回指定的默认值（0），避免 KeyError。
+常用于计数：d[key] = d.get(key, 0) + 1
+
+示例：
+d = {}
+for w in words:
+    d[w["词性"]] = d.get(w["词性"], 0) + 1	Python-W3
+正面	文件读写时为什么要加 encoding="utf-8"？	Windows 系统默认文件编码是什么？不写会怎样？
+背面	Windows 默认编码是 GBK，Python 3 在 Windows 上 open() 默认可用 'gbk'。
+不写 encoding="utf-8"：含中文的文件读写会报 UnicodeDecodeError。
+
+正确写法：
+with open("练习.txt", "w", encoding="utf-8") as f:
+    f.write("用\"坚持\"造一个句子。")	Python-W3
+正面	sorted(列表, key=函数) 的作用	如何在筛选后对结果按"词汇"字段升序排列？
+背面	sorted() 返回排好序的新列表，不改变原列表。
+key 参数指定排序依据。
+
+示例：
+lv4 = sorted(
+    [w for w in words if str(w["HSK等级"]) == "4"],
+    key=lambda w: w["词汇"]
+)	Python-W3
+正面	with open(...) as f 的好处	为什么文件操作推荐用 with 语句？
+背面	with 会在代码块结束时自动关闭文件，即使中途发生异常也不会忘记关。
+避免了手动 f.close() 遗漏导致的资源泄漏。
+
+示例：
+with open("生词表.csv", encoding="utf-8") as f:
+    words = list(csv.DictReader(f))
+# 退出 with 块时文件自动关闭	Python-W3
+正面	str() 转字符串的作用	为什么要对 HSK等级 字段加 str() 再比较？
+背面	CSV 中数字类型的值读进来可能是 int 也可能是 str，
+直接 `== "4"` 可能不匹配 int 类型的 4。
+加 str() 可以统一类型，避免类型不一致导致的筛选漏网。
+
+示例：
+str(w["HSK等级"]) == str(level)  # 两边都转字符串	Python-W3
+正面	lambda 函数是什么	lambda w: w["词汇"] 是什么意思？
+背面	lambda 是匿名函数的简写形式，等价于：
+
+def _(w):
+    return w["词汇"]
+
+常用于 sorted() 的 key 参数，或 map()/filter()。
+
+示例：
+sorted(words, key=lambda w: w["词汇"])  # 按词汇升序	Python-W3
+正面	列表推导式 [expr for x in list if cond]	列表推导式相比普通 for 循环有什么优势？
+背面	一行替代三行，更简洁、更 Pythonic，适合数据转换/筛选场景。
+
+等价的两种写法：
+# 普通循环
+result = []
+for w in words:
+    if w["词性"] == "动词":
+        result.append(w["词汇"])
+
+# 列表推导式（推荐）
+result = [w["词汇"] for w in words if w["词性"] == "动词"]	Python-W3
+正面	HSK4 生词表脚本的四步流程是什么？	vocab_tool.py 的四个函数分别负责什么？
+背面	① 读：load_words() — 用 csv.DictReader 读 CSV
+② 筛：filter_by_level() — 按 HSK 等级过滤并排序
+③ 统：count_by_pos() — 统计各词性出现次数
+④ 写：gen_exercises() — 生成造句练习题文件	Python-W3
