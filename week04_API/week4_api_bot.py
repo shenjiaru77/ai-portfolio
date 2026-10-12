@@ -14,13 +14,9 @@ import weekpath  # 统一加载 .env + 解析路径
 import openai
 
 # ==================== 配置区 ====================
-# DeepSeek 配置
-BASE_URL = "https://api.deepseek.com/v1"
-MODEL = "deepseek-chat"
-
-# 通义配置（换平台时只需改这两行）
-# BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-# MODEL = "qwen-plus"
+# MiniMax 配置
+BASE_URL = "https://www.minimax.cn/v1"
+MODEL = "MiniMax-M2.7"
 # ==============================================
 
 _client = None
@@ -32,9 +28,9 @@ def get_client():
     """
     global _client
     if _client is None:
-        key = os.getenv("DEEPSEEK_API_KEY")
+        key = os.getenv("MINIMAX_API_KEY")
         if not key:
-            raise RuntimeError("未配置 DEEPSEEK_API_KEY")
+            raise RuntimeError("未配置 MINIMAX_API_KEY")
         _client = openai.OpenAI(base_url=BASE_URL, api_key=key)
     return _client
 
@@ -47,13 +43,19 @@ def ask(question, temperature=0.7, max_tokens=800):
         temperature=temperature,
         max_tokens=max_tokens,
     )
-    return r.choices[0].message.content
+    content = r.choices[0].message.content
+
+    # MiniMax 模型会输出 <think>...</think> 思考标签，去掉思考过程只留回答
+    import re
+    content = re.sub(r'<[^>]+>', '', content).strip()
+
+    return content
 
 
 if __name__ == "__main__":
     # 检查密钥是否配置
-    if not os.getenv("DEEPSEEK_API_KEY"):
-        print("错误：未设置 DEEPSEEK_API_KEY。")
+    if not os.getenv("MINIMAX_API_KEY"):
+        print("错误：未设置 MINIMAX_API_KEY。")
         print("  处理：复制 .env.example 为 .env 并填入密钥，重启终端后重试。")
         sys.exit(1)
 

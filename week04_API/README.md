@@ -8,7 +8,8 @@
 | `weekpath.py` | 路径工具（加载 .env，写日志到仓库根目录）|
 | `.env.example` | 环境变量模板（复制为 `.env` 后填入密钥）|
 | `requirements.txt` | Python 依赖 |
-| `密钥安全自查表.md` | 密钥安全检查清单 |
+| `密钥安全自查表.md` | 密钥安全检查清单（5 项）|
+| `验收Checklist.md` | **课堂离场前 5 分钟验收清单** |
 | `chat_log.txt` | 对话日志（运行后自动生成，已在 .gitignore 排除）|
 
 ## 🚀 快速开始
@@ -24,7 +25,7 @@ pip install -r requirements.txt
 # 复制模板
 copy .env.example .env
 
-# 编辑 .env，把 DEEPSEEK_API_KEY=your_deepseek_key_here 换成你的真实密钥
+# 编辑 .env，把 MINIMAX_API_KEY=your_minimax_key_here 换成你的真实密钥
 ```
 
 ### 3. 运行机器人
@@ -45,22 +46,31 @@ python week4_api_bot.py "把字句的教学难点有哪些"
 
 | 参数组合 | 观察到的现象 |
 |----------|--------------|
-| temperature=0.0, max_tokens=15 | |
-| temperature=0.0, max_tokens=800 | |
-| temperature=1.5, max_tokens=60 | |
-| temperature=0.7, max_tokens=800 (默认) | |
+| temperature=0.0, max_tokens=15 | 输出被截断，只回答了一半就被中断；temperature=0.0 很稳定但 max_tokens 太小导致答案不完整 |
+| temperature=0.0, max_tokens=800 | 回答完整且稳定："把字句是一种用'把'将宾语提前到动词前，强调对宾语的处置或影响的句型。" |
+| temperature=1.5, max_tokens=60 | 高温发散，但 max_tokens=60 仍然不够，输出在 60 token 处被截断 |
+| temperature=0.7, max_tokens=800 (默认) | 回答完整且自然："把字句是一种用'把'将宾语提前到动词前，以强调动作对宾语的处置或影响的中文句式。" |
 
 ### Token 用量记录
 
 运行 `python week4_api_bot.py "用一句话说明什么是把字句"` 后：
 
-- 输入 tokens: ___
-- 输出 tokens: ___
-- 总计: ___
-- 费用: ___ 元
+- 输入 tokens: （你的记录）
+- 输出 tokens: （你的记录）
+- 总计: （你的记录）
+- 费用: （你的记录）元
 
 ## 🔒 密钥安全
 
 **每次提交前必须完成密钥安全自查表！**
 
 详见 `密钥安全自查表.md`
+
+## ✅ 课堂离场验收
+
+**逐项打钩，再离开教室！**
+
+详见 `验收Checklist.md`
+
+### 一句话总结
+> API 让程序会说话，密钥安全让这门手艺不出事——跑得通是及格线，零泄露才是底线。
