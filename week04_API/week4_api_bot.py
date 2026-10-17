@@ -47,7 +47,7 @@ def ask(question, temperature=0.7, max_tokens=800):
 
     # MiniMax 模型会输出 <think>...</think> 思考标签，去掉思考过程只留回答
     import re
-    content = re.sub(r'<[^>]+>', '', content).strip()
+    content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
 
     return content
 

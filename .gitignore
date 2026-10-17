@@ -42,7 +42,7 @@ env/
 
 # 日志文件
 *.log
-chat_log.txt
+# chat_log.txt  # 已提交到仓库
 
 # macOS
 .DS_Store
