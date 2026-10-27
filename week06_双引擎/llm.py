@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-W6 双引擎封装：LocalEngine（本地 Ollama）+ APIEngine（云端 MiniMax）+ LLM 统一入口
+W6 双引擎封装：LocalEngine（本地 Ollama）+ APIEngine（云端）+ LLM 统一入口
 
 用法：
     from llm import LLM
@@ -12,6 +12,7 @@ W6 双引擎封装：LocalEngine（本地 Ollama）+ APIEngine（云端 MiniMax�
 import os
 import re
 import sys
+import time
 
 import requests
 import openai
@@ -49,11 +50,13 @@ class LocalEngine:
 
 
 class APIEngine:
-    """云端引擎：MiniMax（OpenAI 兼容接口）。
+    """云端引擎：OpenAI 兼容接口（本作业用 MiniMax）。
 
     客户端按需创建——没配密钥时不能连纯本地模式都进不去。
     """
 
+    # 课程模板用 DeepSeek；这里用 MiniMax（同样 OpenAI 兼容）。
+    # 换平台只改这两行 + 环境变量名，上层 llm.ask() 一行都不用动。
     BASE_URL = "https://www.minimax.cn/v1"
     MODEL = "MiniMax-M2.7"
 
@@ -80,6 +83,25 @@ class APIEngine:
         return re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
 
 
+# ==================== 作业 1：失败重试（最多 2 次再回退） ====================
+# 三选一里为什么选「重试」而不是「多轮对话」或「费用打印」：
+#   双引擎的核心承诺是「打不死」。真实课上最常见的失败不是模型答错，
+#   而是网络抖一下、Ollama 刚启动还没就绪——这类瞬时错误重试一次往往就恢复。
+#   多轮对话会改变 ask() 的接口语义（要传 messages 历史），费用打印更适合放到 W7 之后，
+#   所以先把「瞬时失败自动重试」做扎实。
+RETRY_TIMES = 2           # 每个引擎最多尝试 2 次（1 次正式 + 1 次重试）
+RETRY_DELAY_SECONDS = 1   # 两次尝试之间等 1 秒，避免瞬间连打
+
+# 只对「瞬时错误」重试：连接失败、超时。
+# 401/402/404 这类确定性错误重试没有意义（再试多少次也不会变），直接回退。
+TRANSIENT_ERRORS = (
+    requests.exceptions.ConnectionError,
+    requests.exceptions.Timeout,
+    openai.APITimeoutError,
+    openai.APIConnectionError,
+)
+
+
 class LLM:
     """统一入口：ask(prompt, prefer='local'|'api')，失败自动切换到另一边。"""
 
@@ -87,15 +109,32 @@ class LLM:
         self.local = LocalEngine(local_model)
         self.api = APIEngine()
 
+    def _try_engine(self, engine, prompt, **kw):
+        """对一个引擎做最多 RETRY_TIMES 次尝试；瞬时错误才重试，确定性错误立即抛出。"""
+        last = None
+        for attempt in range(1, RETRY_TIMES + 1):
+            try:
+                return engine.ask(prompt, **kw)
+            except Exception as e:
+                last = e
+                print("[第 %d/%d 次尝试失败] %s: %s"
+                      % (attempt, RETRY_TIMES, type(e).__name__, e))
+                # 确定性错误不重试；瞬时错误且还有次数才等待重试
+                if isinstance(e, TRANSIENT_ERRORS) and attempt < RETRY_TIMES:
+                    time.sleep(RETRY_DELAY_SECONDS)
+                else:
+                    break
+        raise last
+
     def ask(self, prompt, prefer="local", **kw):
         # prefer='local' → 先本地后云端；prefer='api' → 先云端后本地
         first, second = (self.local, self.api) if prefer == "local" else (self.api, self.local)
         try:
-            return first.ask(prompt, **kw)
+            return self._try_engine(first, prompt, **kw)
         except Exception as e:
             # 三纪律：不吞异常、打印切换原因、返回真实结果
             print("[首选引擎失败，自动切换] %s: %s" % (type(e).__name__, e))
-            return second.ask(prompt, **kw)
+            return self._try_engine(second, prompt, **kw)
 
 
 if __name__ == "__main__":
