@@ -1,0 +1,42 @@
+# W2 嵌套仓库历史备份（原 prompt-library/.git）
+# 说明：prompt-library 曾是同仓库的嵌套 clone，其 HEAD 内容与 week02 下的 8 个模板逐字节一致；
+# 这里只保留提交历史文字记录，原 .git 已移除。
+
+b94b9e8 2026-10-17 w2
+8ea9c91 2026-09-27 W2：提示词模板库 v1
+e751bdb 2026-09-27 Merge branch 'main' of https://github.com/shenjiaru77/ai-portfolio
+6b08c58 2026-09-27 新增教案设计模板
+2960870 2026-09-27 Delete prompt-library/语法改错.md
+35c5c8e 2026-09-27 Delete prompt-library/课堂活动.md
+ae936d5 2026-09-27 Delete prompt-library/出题.md
+edaa678 2026-09-27 Delete prompt-library/段落总结.md
+a553702 2026-09-27 Delete prompt-library/近义词辨析教学.md
+f61da1a 2026-09-27 Delete prompt-library/作文批改评语.md
+4909076 2026-09-27 Delete prompt-library/教案.md
+9507b0c 2026-09-27 Delete prompt-library/中英翻译.md
+a5e60d5 2026-09-27 Delete prompt-library/prompt_iteration_shturl
+366ad03 2026-09-27 task3 second commit
+d2d35dc 2026-09-27 task3 first commit
+8b15d63 2026-09-21 Create teaching template for Chinese synonym analysis
+28102f9 2026-09-21 Revise essay feedback template for clarity and detail
+4fc4d32 2026-09-21 Add essay correction comment template for students
+386858b 2026-09-21 Enhance prompt with variable question count
+29ae46b 2026-09-21 Update 出题.md
+3d9f0ac 2026-09-21 Optimize prompt iterations for HSK reading questions
+ace26e9 2026-09-21 Enhance prompt guidelines for HSK4 reading questions
+696b0a4 2026-09-21 Enhance prompt structure for HSK4 question generation
+0566830 2026-09-21 Enhance prompt-library with HSK reading question template
+b795a85 2026-09-21 Update 出题.md
+4395eeb 2026-09-21 Update 出题.md with adjustable question options
+27924a2 2026-09-21 Update 出题.md to include question quantity note
+65e316e 2026-09-21 Add prompt iteration documentation for HSK templates
+f101bf4 2026-09-21 Create 中英翻译.md for translation prompts
+0f1ca78 2026-09-21 Create段落总结.md for summarizing Chinese texts
+34c3b3e 2026-09-21 Create classroom activities document for HSK4
+2669992 2026-09-21 Create 语法改错.md
+6410a9b 2026-09-21 Rename prompt-library/prompt-library/教案.md to prompt-library/教案.md
+45c819e 2026-09-21 Add HSK4 lesson plan template in 教案.md
+f33ad1e 2026-09-21 Create prompt for HSK4 reading comprehension questions
+707d2f5 2026-09-20 Add AI任务单.md for task documentation
+8dbfeba 2026-09-20 Add greeting message to hello.py
+a5abf39 2026-09-20 Initial commit

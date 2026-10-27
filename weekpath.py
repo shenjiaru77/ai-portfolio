@@ -26,7 +26,8 @@ def root_path(filename):
 
 
 # 固定三行：注册各周目录进 sys.path，跨周 import 才找得到
-for _week in ("week04_API", "week05_LocalDeploy", "week06_双引擎"):
+for _week in ("week01_仓库初始化", "week02_Prompt工程", "week03_AI结对编程",
+              "week04_API", "week05_LocalDeploy", "week06_双引擎"):
     _p = os.path.join(ROOT, _week)
     if os.path.isdir(_p) and _p not in sys.path:
         sys.path.insert(0, _p)
