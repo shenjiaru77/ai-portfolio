@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
 ### 修改点③：引入 weekpath.py 统一路径
 **原因**：硬编码 `"练习.txt"` 意味着文件落在运行时的当前目录（cwd），从不同目录运行会找不到文件。
-**修改**：在同一目录放 `weekpath.py`，用 `sys.path.insert` 引入，`weekpath.root_path("练习.txt")` 统一输出到仓库根目录，无论从哪里运行都找得到。
+**修改**：在同一目录放 `weekpath.py`，用 `sys.path.insert` 引入，`weekpath.root_path("练习.txt")` 统一输出到代码包根目录，无论从哪里运行都找得到。
 
 ### 修改点④（来自作业 1 — 精读官方教程后加入）：用 `sorted()` 稳定排序
 **原因**：精读 Python 官方教程「列表」章节时学到了内置函数 `sorted()`。
@@ -129,7 +129,7 @@ if __name__ == "__main__":
 | 字段查询 | `row["等级"]` | `str(row["HSK等级"]) == str(level)` | CSV 表头是"HSK等级"，加 str() 防类型不一致 |
 | 文件编码 | 缺少 encoding | 全部 `encoding="utf-8"` | Windows 默认 GBK，不写会 UnicodeDecodeError |
 | 命令行参数 | argparse（用户可自定义等级） | 删除 argparse，默认等级 "4" 写死在调用处 | 本周只学 4 个语法，argparse 超纲且答辩讲不清 |
-| 路径处理 | 硬编码相对路径 `"练习.txt"` | `weekpath.root_path("练习.txt")` | 无论从哪个目录运行，产物都落在仓库根目录 |
+| 路径处理 | 硬编码相对路径 `"练习.txt"` | `weekpath.root_path("练习.txt")` | 无论从哪个目录运行，产物都落在代码包根目录 |
 | 词序 | CSV 行顺序 | `sorted(..., key=lambda w: w["词汇"])` | 按词汇拼音升序，输出稳定，与 PPT 预期一致 |
 | 代码组织 | 单一大函数 | 拆成 load_words / filter_by_level / count_by_pos / gen_exercises 四个函数 | 四个函数各管一件事，可复用、可答辩讲解 |
 | 扩展功能 | 无 | 新增 group_by_pos + gen_fill_blank | 作业 2 要求，选做功能 |
@@ -142,16 +142,16 @@ if __name__ == "__main__":
 ## 5. 运行验证
 
 ```powershell
-cd "C:\Users\shenj\Desktop\AI Workspace\AI结对编程"
+cd "C:\Users\shenj\Desktop\AI Workspace\ai-portfolio\week03_AI结对编程"
 python vocab_tool.py
 ```
 
 输出：
 ```
 总词汇 14 个，其中 HSK4 词汇 4 个，词性分布：{'动词': 3, '名词': 1}
-已生成：C:\Users\shenj\Desktop\AI Workspace\AI结对编程\练习.txt
-已生成：C:\Users\shenj\Desktop\AI Workspace\AI结对编程\练习_按词性.txt
-已生成：C:\Users\shenj\Desktop\AI Workspace\AI结对编程\练习_填空.txt
+已生成：C:\Users\shenj\Desktop\AI Workspace\ai-portfolio\week03_AI结对编程\练习.txt
+已生成：C:\Users\shenj\Desktop\AI Workspace\ai-portfolio\week03_AI结对编程\练习_按词性.txt
+已生成：C:\Users\shenj\Desktop\AI Workspace\ai-portfolio\week03_AI结对编程\练习_填空.txt
 ```
 
 练习.txt 内容（与 PPT 第 9 页预期完全一致）：
