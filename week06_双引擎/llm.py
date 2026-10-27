@@ -56,7 +56,11 @@ class APIEngine:
     """
 
     # 课程模板用 DeepSeek；这里用 MiniMax（同样 OpenAI 兼容）。
-    # 换平台只改这两行 + 环境变量名，上层 llm.ask() 一行都不用动。
+    # 换回课程模板的 DeepSeek 只需改这三处：
+    #   BASE_URL = "https://api.deepseek.com/v1"
+    #   MODEL = "deepseek-chat"
+    #   密钥改读 DEEPSEEK_API_KEY（.env 里同名）
+    # 上层 llm.ask() 一行都不用动 —— 这就是封装的收益。
     BASE_URL = "https://www.minimax.cn/v1"
     MODEL = "MiniMax-M2.7"
 
