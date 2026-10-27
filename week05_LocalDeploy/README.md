@@ -35,4 +35,6 @@
 ```powershell
 # 前提：Ollama 已启动；仓库根目录 .env 里配好 MINIMAX_API_KEY（没有则云端列标失败）
 python week05_LocalDeploy/compare_local_cloud.py
+# 推理型问题（如「把字句」）思考耗 token，可加大额度：
+python week05_LocalDeploy/compare_local_cloud.py 2500
 ```

@@ -2,11 +2,15 @@
 """W5 对比脚本：同一组学科问题分别问「本地模型」和「云端 API」，打印可粘贴的 Markdown 表。
 
 用法（在仓库根目录或本文件夹都能跑）：
-    python week05_LocalDeploy/compare_local_cloud.py
+    python week05_LocalDeploy/compare_local_cloud.py          # 默认 max_tokens=1000
+    python week05_LocalDeploy/compare_local_cloud.py 2500     # 推理题给更大额度
 
 前提：
     1) Ollama 已启动且已 pull 模型（默认 qwen2.5:0.5b）
     2) 仓库根目录 .env 里配好了 MINIMAX_API_KEY（没有也能跑，云端列会标「失败」）
+
+注意：MiniMax-M2.7 是推理模型，会先输出 <think> 思考内容；
+      max_tokens=300 时会把额度全花在思考上、回答为空，所以默认给 1000。
 """
 import os
 import sys
@@ -28,13 +32,15 @@ QUESTIONS = [
 ]
 
 LOCAL_MODEL = os.getenv("LOCAL_MODEL", "qwen2.5:0.5b")
+# 推理型云端模型会先花 token 思考；给太小会拿到空回答（实测 300 不够，1000 起步）
+MAX_TOKENS = int(sys.argv[1]) if len(sys.argv) > 1 else 1000
 
 
 def run_one(engine, prompt):
     """直接调某个引擎（不走 LLM 的回退），返回 (耗时, 是否成功, 回答前 80 字/错误信息)。"""
     t0 = time.time()
     try:
-        ans = engine.ask(prompt, max_tokens=300)
+        ans = engine.ask(prompt, max_tokens=MAX_TOKENS)
         return time.time() - t0, True, ans.replace("\n", " ")[:80]
     except Exception as e:
         return time.time() - t0, False, "%s: %s" % (type(e).__name__, e)
